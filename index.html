@@ -3,624 +3,846 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smart Car Parking System</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>Smart Car Parking System | Professional Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
-    :root {
-      --primary: #4361ee;
-      --secondary: #3f37c9;
-      --accent: #4895ef;
-      --success: #4cc9f0;
-      --danger: #f72585;
-      --warning: #f8961e;
-      --light: #f8f9fa;
-      --dark: #212529;
-      --gray: #6c757d;
-      --white: #ffffff;
-    }
-
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1d4ed8;
+      --primary-light: #60a5fa;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --info: #3b82f6;
+      --dark: #1e293b;
+      --gray: #64748b;
+      --light: #f8fafc;
+      --white: #ffffff;
+      --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+      --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+      --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+      --radius: 12px;
+    }
+
     body {
-      font-family: 'Poppins', sans-serif;
-      background-color: #f5f7fa;
-      color: var(--dark);
-      line-height: 1.6;
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
     }
 
-    header {
-      background: linear-gradient(135deg, var(--primary), var(--secondary));
-      color: var(--white);
-      padding: 1.5rem 0;
-      text-align: center;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-      position: relative;
-      overflow: hidden;
-    }
-
-    header::before {
-      content: "";
-      position: absolute;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-      transform: rotate(30deg);
-    }
-
-    header h1 {
-      font-size: 2.2rem;
-      font-weight: 700;
-      margin-bottom: 0.5rem;
-      position: relative;
-    }
-
-    header p {
-      font-size: 1rem;
-      opacity: 0.9;
-      position: relative;
-    }
-
-    .parking-container {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 1.5rem;
-      padding: 2rem;
-      max-width: 1400px;
+    .dashboard {
+      max-width: 1440px;
       margin: 0 auto;
+    }
+
+    /* Header */
+    .header {
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      margin-bottom: 2rem;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .header-left h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--dark);
+      margin-bottom: 0.25rem;
+    }
+
+    .header-left p {
+      color: var(--gray);
+      font-size: 0.9rem;
+    }
+
+    .system-status {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    .status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.5rem 1rem;
+      background: #f1f5f9;
+      border-radius: 30px;
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+
+    .status-dot.online {
+      background: var(--success);
+      box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.2);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4); }
+      70% { box-shadow: 0 0 0 6px rgba(16, 185, 129, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); }
+    }
+
+    /* Stats Cards */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
+    }
+
+    .stat-card {
+      background: var(--white);
+      padding: 1.5rem;
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: transform 0.2s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow-lg);
+    }
+
+    .stat-info h3 {
+      font-size: 0.9rem;
+      color: var(--gray);
+      margin-bottom: 0.5rem;
+    }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--dark);
+    }
+
+    .stat-icon {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary-light), var(--primary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.5rem;
+    }
+
+    /* Parking Grid */
+    .parking-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      margin-bottom: 2rem;
     }
 
     .slot-card {
       background: var(--white);
-      border-radius: 12px;
+      border-radius: var(--radius);
       padding: 1.5rem;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: var(--shadow);
+      border: 1px solid #e2e8f0;
+      transition: all 0.3s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .slot-card::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 4px;
+    }
+
+    .slot-card.available::before { background: var(--success); }
+    .slot-card.booked::before { background: var(--warning); }
+    .slot-card.occupied::before { background: var(--danger); }
+
+    .slot-header {
       display: flex;
-      flex-direction: column;
-      border-top: 4px solid var(--primary);
-    }
-
-    .slot-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 12px 20px rgba(0, 0, 0, 0.12);
-    }
-
-    .slot-card h2 {
-      font-size: 1.4rem;
-      color: var(--primary);
+      justify-content: space-between;
+      align-items: center;
       margin-bottom: 1rem;
+    }
+
+    .slot-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .slot-title i {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .slot-title h2 {
+      font-size: 1.25rem;
+      font-weight: 600;
+    }
+
+    .slot-badge {
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+    }
+
+    .slot-badge.available { background: #d1fae5; color: #065f46; }
+    .slot-badge.booked { background: #fed7aa; color: #92400e; }
+    .slot-badge.occupied { background: #fee2e2; color: #991b1b; }
+
+    .slot-info {
+      margin: 1rem 0;
+      padding: 0.75rem;
+      background: #f8fafc;
+      border-radius: 8px;
+    }
+
+    .slot-info p {
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      color: var(--dark);
     }
 
-    .slot-card h2 i {
-      font-size: 1.2rem;
-    }
-
-    .slot-card .info {
-      font-size: 1rem;
-      margin: 0.5rem 0;
-      padding: 0.5rem;
-      border-radius: 6px;
-      font-weight: 500;
-    }
-
-    .slot-card input {
-      padding: 0.8rem;
-      border: 1px solid #e0e0e0;
+    .vehicle-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      border: 2px solid #e2e8f0;
       border-radius: 8px;
-      margin: 0.5rem 0;
-      font-size: 0.9rem;
-      transition: border 0.3s ease;
+      margin: 1rem 0;
+      font-size: 0.95rem;
+      transition: border-color 0.2s;
     }
 
-    .slot-card input:focus {
+    .vehicle-input:focus {
       outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+      border-color: var(--primary);
     }
 
-    .slot-card button {
-      padding: 0.8rem;
+    .btn {
+      padding: 0.75rem 1.5rem;
       border: none;
       border-radius: 8px;
-      background-color: var(--primary);
-      color: white;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      margin-top: 0.5rem;
+      font-weight: 600;
+      font-size: 0.95rem;
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      width: 100%;
     }
 
-    .slot-card button:hover {
-      background-color: var(--secondary);
+    .btn-primary {
+      background: var(--primary);
+      color: white;
+    }
+
+    .btn-primary:hover:not(:disabled) {
+      background: var(--primary-dark);
       transform: translateY(-2px);
+      box-shadow: var(--shadow);
     }
 
-    .slot-card button:disabled {
-      background-color: var(--gray);
+    .btn-primary:disabled {
+      opacity: 0.5;
       cursor: not-allowed;
-      transform: none;
     }
 
-    .slot-card .timer, .slot-card .occupy-timer {
-      font-size: 0.85rem;
-      margin-top: 0.5rem;
-      padding: 0.3rem 0.5rem;
-      border-radius: 4px;
-      background-color: rgba(0, 0, 0, 0.05);
-    }
-
-    /* Status Colors */
-    .available {
-      border-top-color: #4ade80;
-    }
-
-    .available .info {
-      background-color: rgba(74, 222, 128, 0.1);
-      color: #166534;
-    }
-
-    .booked {
-      border-top-color: var(--warning);
-    }
-
-    .booked .info {
-      background-color: rgba(248, 150, 30, 0.1);
-      color: #9a3412;
-    }
-
-    .occupied {
-      border-top-color: var(--danger);
-    }
-
-    .occupied .info {
-      background-color: rgba(247, 37, 133, 0.1);
-      color: #9d174d;
-    }
-
-    .log-section {
-      background-color: var(--white);
-      border-radius: 12px;
-      padding: 2rem;
-      margin: 2rem auto;
-      max-width: 1200px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
-    }
-
-    .log-section h2 {
-      font-size: 1.6rem;
-      color: var(--primary);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .log-controls {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .log-controls input {
-      flex: 1;
-      min-width: 200px;
-      padding: 0.8rem 1rem;
-      border: 1px solid #e0e0e0;
+    .timer {
+      margin-top: 1rem;
+      padding: 0.75rem;
+      background: #f1f5f9;
       border-radius: 8px;
       font-size: 0.9rem;
-      transition: all 0.3s ease;
-    }
-
-    .log-controls input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
-    }
-
-    .log-controls button {
-      padding: 0.8rem 1.5rem;
-      background-color: var(--primary);
-      color: white;
-      border: none;
-      border-radius: 8px;
-      font-weight: 500;
-      cursor: pointer;
-      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       gap: 0.5rem;
+      color: var(--dark);
     }
 
-    .log-controls button:hover {
-      background-color: var(--secondary);
-      transform: translateY(-2px);
-    }
-
-    .log-table {
-      width: 100%;
-      border-collapse: separate;
-      border-spacing: 0;
+    /* Logs Section */
+    .logs-section {
       background: var(--white);
-      border-radius: 10px;
-      overflow: hidden;
+      border-radius: var(--radius);
+      padding: 2rem;
+      box-shadow: var(--shadow-lg);
     }
 
-    .log-table th {
-      background-color: var(--primary);
-      color: white;
+    .logs-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .logs-title {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+    }
+
+    .logs-title i {
+      font-size: 1.5rem;
+      color: var(--primary);
+    }
+
+    .logs-title h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .filters {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .filter-input {
+      padding: 0.5rem 1rem;
+      border: 2px solid #e2e8f0;
+      border-radius: 8px;
+      min-width: 200px;
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    th {
+      background: #f8fafc;
       padding: 1rem;
       text-align: left;
+      font-weight: 600;
+      color: var(--dark);
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    td {
+      padding: 1rem;
+      border-bottom: 1px solid #e2e8f0;
+    }
+
+    tr:hover td {
+      background: #f8fafc;
+    }
+
+    .vehicle-badge {
+      background: #e2e8f0;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
       font-weight: 500;
     }
 
-    .log-table td {
-      padding: 0.8rem 1rem;
-      border-bottom: 1px solid #f0f0f0;
+    .duration-badge {
+      background: #dbeafe;
+      color: #1e40af;
+      padding: 0.25rem 0.75rem;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      font-weight: 500;
     }
 
-    .log-table tr:last-child td {
-      border-bottom: none;
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      padding: 1rem 1.5rem;
+      background: var(--dark);
+      color: white;
+      border-radius: 8px;
+      box-shadow: var(--shadow-lg);
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      transform: translateX(400px);
+      transition: transform 0.3s;
+      z-index: 1000;
     }
 
-    .log-table tr:hover td {
-      background-color: rgba(67, 97, 238, 0.05);
+    .toast.show {
+      transform: translateX(0);
     }
 
-    .log-table tr:nth-child(even) {
-      background-color: #f9f9f9;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1.5rem;
-      background-color: var(--dark);
-      color: var(--white);
-      margin-top: 2rem;
-    }
+    .toast.success { background: var(--success); }
+    .toast.warning { background: var(--warning); }
+    .toast.error { background: var(--danger); }
 
     @media (max-width: 768px) {
-      .parking-container {
+      .header {
+        flex-direction: column;
+        gap: 1rem;
+        text-align: center;
+      }
+      
+      .stats-grid {
         grid-template-columns: 1fr;
-        padding: 1rem;
       }
       
-      .log-section {
-        padding: 1.5rem;
-        margin: 1rem;
-      }
-      
-      .log-controls {
+      .logs-header {
         flex-direction: column;
       }
       
-      .log-controls input, .log-controls button {
+      .filters {
         width: 100%;
       }
       
-      .log-table {
-        display: block;
-        overflow-x: auto;
+      .filter-input {
+        width: 100%;
       }
     }
   </style>
 </head>
 <body>
-  <header>
-    <h1><i class="fas fa-car"></i> Smart Car Parking System</h1>
-    <p>Real-time monitoring with advanced booking system</p>
-  </header>
+  <div class="dashboard">
+    <!-- Header -->
+    <div class="header">
+      <div class="header-left">
+        <h1><i class="fas fa-parking" style="color: var(--primary);"></i> Smart Car Parking System</h1>
+        <p>Professional Edition • Real-time Monitoring • Advanced Analytics</p>
+      </div>
+      <div class="system-status">
+        <div class="status-badge">
+          <span class="status-dot online"></span>
+          <span>System Online</span>
+        </div>
+        <div class="status-badge">
+          <i class="fas fa-wifi"></i>
+          <span id="wifiStatus">Connected</span>
+        </div>
+        <div class="status-badge">
+          <i class="fas fa-clock"></i>
+          <span id="currentTime"></span>
+        </div>
+      </div>
+    </div>
 
-  <main class="parking-container">
-    <div id="slot1" class="slot-card available">
-      <h2><i class="fas fa-parking"></i> Slot 1</h2>
-      <p class="info">Available</p>
-      <input type="text" id="slot1-vehicle" placeholder="Enter Vehicle Number" />
-      <button onclick="bookSlot('slot1')"><i class="fas fa-bookmark"></i> Book Now</button>
-      <p class="timer"></p>
-      <p class="occupy-timer"></p>
+    <!-- Statistics -->
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-info">
+          <h3>Total Slots</h3>
+          <div class="stat-number">5</div>
+        </div>
+        <div class="stat-icon">
+          <i class="fas fa-parking"></i>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-info">
+          <h3>Available</h3>
+          <div class="stat-number" id="availableCount">0</div>
+        </div>
+        <div class="stat-icon" style="background: var(--success);">
+          <i class="fas fa-check-circle"></i>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-info">
+          <h3>Booked</h3>
+          <div class="stat-number" id="bookedCount">0</div>
+        </div>
+        <div class="stat-icon" style="background: var(--warning);">
+          <i class="fas fa-bookmark"></i>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-info">
+          <h3>Occupied</h3>
+          <div class="stat-number" id="occupiedCount">0</div>
+        </div>
+        <div class="stat-icon" style="background: var(--danger);">
+          <i class="fas fa-car"></i>
+        </div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-info">
+          <h3>Today's Revenue</h3>
+          <div class="stat-number" id="todayRevenue">₹0</div>
+        </div>
+        <div class="stat-icon" style="background: var(--primary);">
+          <i class="fas fa-rupee-sign"></i>
+        </div>
+      </div>
     </div>
-    <div id="slot2" class="slot-card available">
-      <h2><i class="fas fa-parking"></i> Slot 2</h2>
-      <p class="info">Available</p>
-      <input type="text" id="slot2-vehicle" placeholder="Enter Vehicle Number" />
-      <button onclick="bookSlot('slot2')"><i class="fas fa-bookmark"></i> Book Now</button>
-      <p class="timer"></p>
-      <p class="occupy-timer"></p>
-    </div>
-    <div id="slot3" class="slot-card available">
-      <h2><i class="fas fa-parking"></i> Slot 3</h2>
-      <p class="info">Available</p>
-      <input type="text" id="slot3-vehicle" placeholder="Enter Vehicle Number" />
-      <button onclick="bookSlot('slot3')"><i class="fas fa-bookmark"></i> Book Now</button>
-      <p class="timer"></p>
-      <p class="occupy-timer"></p>
-    </div>
-    <div id="slot4" class="slot-card available">
-      <h2><i class="fas fa-parking"></i> Slot 4</h2>
-      <p class="info">Available</p>
-      <input type="text" id="slot4-vehicle" placeholder="Enter Vehicle Number" />
-      <button onclick="bookSlot('slot4')"><i class="fas fa-bookmark"></i> Book Now</button>
-      <p class="timer"></p>
-      <p class="occupy-timer"></p>
-    </div>
-    <div id="slot5" class="slot-card available">
-      <h2><i class="fas fa-parking"></i> Slot 5</h2>
-      <p class="info">Available</p>
-      <input type="text" id="slot5-vehicle" placeholder="Enter Vehicle Number" />
-      <button onclick="bookSlot('slot5')"><i class="fas fa-bookmark"></i> Book Now</button>
-      <p class="timer"></p>
-      <p class="occupy-timer"></p>
-    </div>
-  </main>
 
-  <section class="log-section">
-    <h2><i class="fas fa-clipboard-list"></i> Parking Session Logs</h2>
-    <div class="log-controls">
-      <input type="text" id="filterVehicle" placeholder="🔍 Filter by Vehicle" oninput="filterLogs()" />
-      <input type="text" id="filterSlot" placeholder="🔍 Filter by Slot" oninput="filterLogs()" />
-      <button onclick="downloadCSV()"><i class="fas fa-download"></i> Download CSV</button>
+    <!-- Parking Slots Grid -->
+    <div class="parking-grid" id="parkingGrid"></div>
+
+    <!-- Logs Section -->
+    <div class="logs-section">
+      <div class="logs-header">
+        <div class="logs-title">
+          <i class="fas fa-history"></i>
+          <h2>Parking Session Logs</h2>
+        </div>
+        <div class="filters">
+          <input type="text" class="filter-input" id="filterVehicle" placeholder="🔍 Filter by vehicle" oninput="filterLogs()">
+          <input type="text" class="filter-input" id="filterSlot" placeholder="🔍 Filter by slot" oninput="filterLogs()">
+          <button class="btn btn-primary" onclick="exportToExcel()">
+            <i class="fas fa-file-excel"></i> Export
+          </button>
+          <button class="btn btn-primary" onclick="printReport()">
+            <i class="fas fa-print"></i> Print
+          </button>
+        </div>
+      </div>
+      <div class="table-container">
+        <table id="logsTable">
+          <thead>
+            <tr>
+              <th>Slot</th>
+              <th>Vehicle</th>
+              <th>Booking Time</th>
+              <th>Pre-Booking</th>
+              <th>Parking Duration</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="logTableBody"></tbody>
+        </table>
+      </div>
     </div>
-    <table class="log-table">
-      <thead>
-        <tr>
-          <th>Slot</th>
-          <th>Vehicle</th>
-          <th>Booking Time</th>
-          <th>Pre-Booking Duration</th>
-          <th>Parking Duration</th>
-        </tr>
-      </thead>
-      <tbody id="logTableBody"></tbody>
-    </table>
-  </section>
+  </div>
 
-  <footer>
-    <p>© 2025 Smart Parking Solutions | All rights reserved</p>
-  </footer>
+  <!-- Toast Notification -->
+  <div id="toast" class="toast">
+    <i class="fas fa-info-circle"></i>
+    <span id="toastMessage"></span>
+  </div>
 
-<script type="module">
+  <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyBMLxyco3ZJsY_exarrv1or2ayxUHq27A8",
-  authDomain: "smart-car-parking-a6245.firebaseapp.com",
-  databaseURL: "https://smart-car-parking-a6245-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "smart-car-parking-a6245",
-  storageBucket: "smart-car-parking-a6245.firebasestorage.app",
-  messagingSenderId: "465653410219",
-  appId: "1:465653410219:web:159363eef141a96b234aee"
-};
+    import { getDatabase, ref, set, onValue, update } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
+    const firebaseConfig = {
+      apiKey: "AIzaSyAt-8RgxZbg9Cb4YtGqC9kyytjRptWNYXk",
+      authDomain: "carparkingsystem-8bea0.firebaseapp.com",
+      databaseURL: "https://carparkingsystem-8bea0-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "carparkingsystem-8bea0",
+      storageBucket: "carparkingsystem-8bea0.appspot.com",
+      messagingSenderId: "138724264142",
+      appId: "1:138724264142:web:ab951303a38a6ddb25689f"
+    };
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
-    const slots = ["slot1", "slot2", "slot3", "slot4", "slot5"];
+    
     let fullLogs = [];
-    let occupationStartTimes = {};
-    let activeLogs = {}; // Track active logs by slot
+    let revenueData = { today: 0 };
+    const PARKING_RATE_PER_HOUR = 20; // ₹20 per hour
 
-    const updateUI = () => {
-      slots.forEach(slot => {
-        const slotRef = ref(db, "slots/" + slot);
-        onValue(slotRef, (snapshot) => {
-          const data = snapshot.val();
-          const card = document.getElementById(slot);
-          const btn = card.querySelector("button");
-          const timer = card.querySelector(".timer");
-          const timer2 = card.querySelector(".occupy-timer");
-          const info = card.querySelector(".info");
+    // Show toast notification
+    function showToast(message, type = 'success') {
+      const toast = document.getElementById('toast');
+      const toastMessage = document.getElementById('toastMessage');
+      toast.className = `toast ${type}`;
+      toastMessage.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 3000);
+    }
 
-          clearInterval(card.timerInterval);
-          clearInterval(card.occupyInterval);
-
-          if (data) {
-            const status = data.status;
-            const previousStatus = card.previousStatus;
-            card.classList.remove("available", "booked", "occupied");
-            card.classList.add(status);
-
-            if (status === "booked") {
-              btn.disabled = true;
-              info.innerText = `Booked by: ${data.vehicle}`;
-              const bookingStart = data.bookingTime || Date.now();
-              card.timerInterval = setInterval(() => {
-                const now = Date.now();
-                const diff = Math.floor((now - bookingStart) / 1000);
-                const mins = Math.floor(diff / 60);
-                const secs = diff % 60;
-                timer.innerText = `⏱ Pre-Booking: ${mins}m ${secs}s`;
-              }, 1000);
-              timer2.innerText = "";
-
-            } else if (status === "occupied") {
-              btn.disabled = true;
-              info.innerText = `Occupied by: ${data.vehicle}`;
-              
-              if (!occupationStartTimes[slot] || previousStatus !== "occupied") {
-                occupationStartTimes[slot] = Date.now();
-                // Create log entry when vehicle occupies the slot
-                const logKey = `${slot}-${data.vehicle}-${data.bookingTime}`;
-                activeLogs[slot] = logKey;
-                set(ref(db, `parkingLogs/${logKey}`), {
-                  slot: slot,
-                  vehicle: data.vehicle,
-                  bookingTime: data.bookingTime,
-                  occupyTime: occupationStartTimes[slot],
-                  preBookingDuration: formatDuration(data.bookingTime, occupationStartTimes[slot]),
-                  parkingDuration: "-"
-                });
-              }
-              
-              card.occupyInterval = setInterval(() => {
-                const now = Date.now();
-                const diff = Math.floor((now - occupationStartTimes[slot]) / 1000);
-                const mins = Math.floor(diff / 60);
-                const secs = diff % 60;
-                timer2.innerText = `🅿 Occupied: ${mins}m ${secs}s`;
-              }, 1000);
-              timer.innerText = "";
-
-            } else if (status === "available") {
-              btn.disabled = false;
-              info.innerText = "Available";
-              timer.innerText = "";
-              timer2.innerText = "";
-              
-              // Update log entry when vehicle vacates
-              if (previousStatus === "occupied" && activeLogs[slot]) {
-                const vacateTime = Date.now();
-                set(ref(db, `parkingLogs/${activeLogs[slot]}`), {
-                  vacateTime: vacateTime,
-                  parkingDuration: formatDuration(occupationStartTimes[slot], vacateTime)
-                }, { merge: true });
-                delete activeLogs[slot];
-              }
-              
-              delete occupationStartTimes[slot];
-            }
-            
-            card.previousStatus = status;
-          }
-        });
-      });
-    };
-
-    const loadLogs = () => {
-      const logsRef = ref(db, "parkingLogs/");
-      onValue(logsRef, (snapshot) => {
-        const table = document.getElementById("logTableBody");
-        table.innerHTML = "";
-        fullLogs = [];
-        const logs = snapshot.val();
-        if (logs) {
-          // Convert logs object to array and sort by booking time
-          fullLogs = Object.values(logs)
-            .filter(log => log.slot && log.vehicle && log.bookingTime)
-            .sort((a, b) => parseInt(b.bookingTime) - parseInt(a.bookingTime));
-          
-          fullLogs.forEach(log => {
-            const row = createLogRow(log);
-            table.appendChild(row);
-          });
-        }
-      });
-    };
-
-    const formatTime = (ms) => {
-      if (!ms) return "-";
-      const date = new Date(parseInt(ms));
-      const options = {
-        year: 'numeric',
+    // Format time
+    function formatTime(ms) {
+      if (!ms) return '-';
+      return new Date(parseInt(ms)).toLocaleString('en-IN', {
+        day: '2-digit',
         month: 'short',
-        day: 'numeric',
+        year: 'numeric',
         hour: '2-digit',
         minute: '2-digit',
         second: '2-digit',
-        timeZoneName: 'short'
-      };
-      return date.toLocaleString(undefined, options);
-    };
+        hour12: true
+      });
+    }
 
-    const formatDuration = (startTime, endTime) => {
-      if (!startTime || !endTime) return "-";
-      const diff = Math.max(0, Math.floor((parseInt(endTime) - parseInt(startTime)) / 1000));
+    // Format duration
+    function formatDuration(start, end) {
+      if (!start || !end) return '-';
+      const diff = Math.floor((parseInt(end) - parseInt(start)) / 1000);
       const hours = Math.floor(diff / 3600);
       const mins = Math.floor((diff % 3600) / 60);
       const secs = diff % 60;
+      return `${hours}h ${mins}m ${secs}s`;
+    }
+
+    // Calculate parking fee
+    function calculateFee(occupyTime, vacateTime) {
+      if (!occupyTime || !vacateTime) return 0;
+      const durationHours = (parseInt(vacateTime) - parseInt(occupyTime)) / (1000 * 60 * 60);
+      return Math.ceil(durationHours * PARKING_RATE_PER_HOUR);
+    }
+
+    // Update statistics
+    function updateStatistics(slots) {
+      let available = 0, booked = 0, occupied = 0;
+      slots.forEach(slot => {
+        switch(slot.status) {
+          case 'free': available++; break;
+          case 'booked': booked++; break;
+          case 'occupied': occupied++; break;
+        }
+      });
       
-      if (hours > 0) {
-        return `${hours}h ${mins}m ${secs}s`;
-      } else if (mins > 0) {
-        return `${mins}m ${secs}s`;
-      } else {
-        return `${secs}s`;
+      document.getElementById('availableCount').textContent = available;
+      document.getElementById('bookedCount').textContent = booked;
+      document.getElementById('occupiedCount').textContent = occupied;
+    }
+
+    // Update current time
+    function updateCurrentTime() {
+      document.getElementById('currentTime').textContent = 
+        new Date().toLocaleTimeString('en-IN', { hour12: true });
+    }
+    setInterval(updateCurrentTime, 1000);
+
+    // Book slot
+    window.bookSlot = async (slotId) => {
+      const input = document.getElementById(`vehicle-${slotId}`);
+      const vehicleNumber = input?.value?.trim();
+      
+      if (!vehicleNumber) {
+        showToast('Please enter vehicle number', 'warning');
+        return;
+      }
+
+      try {
+        const bookingTime = Date.now();
+        await set(ref(db, `slots/${slotId}`), {
+          status: 'booked',
+          vehicle: vehicleNumber,
+          bookingTime: bookingTime,
+          occupyTime: null,
+          createdAt: bookingTime
+        });
+        
+        input.value = '';
+        showToast(`✅ Slot ${slotId} booked successfully!`, 'success');
+        
+        // Play buzzer sound via ESP32
+        await set(ref(db, `system/commands`), {
+          buzzer: 'single',
+          timestamp: bookingTime
+        });
+        
+      } catch (error) {
+        showToast('❌ Booking failed: ' + error.message, 'error');
       }
     };
 
-    const createLogRow = (log) => {
-      const row = document.createElement("tr");
+    // Cancel booking
+    window.cancelBooking = async (slotId) => {
+      if (!confirm('Are you sure you want to cancel this booking?')) return;
       
-      // Calculate parking duration if vacate time exists
-      const parkingDuration = log.vacateTime 
-        ? formatDuration(log.occupyTime, log.vacateTime)
-        : "-";
-
-      row.innerHTML = `
-        <td>${log.slot || "-"}</td>
-        <td>${log.vehicle}</td>
-        <td>${formatTime(log.bookingTime)}</td>
-        <td>${log.preBookingDuration || "-"}</td>
-        <td>${parkingDuration}</td>
-      `;
-      return row;
+      try {
+        await update(ref(db, `slots/${slotId}`), {
+          status: 'free',
+          vehicle: '',
+          bookingTime: null
+        });
+        showToast(`✅ Booking cancelled for Slot ${slotId}`, 'success');
+      } catch (error) {
+        showToast('❌ Cancellation failed: ' + error.message, 'error');
+      }
     };
 
-    const filterLogs = () => {
-      const vehicleFilter = document.getElementById("filterVehicle").value.toLowerCase();
-      const slotFilter = document.getElementById("filterSlot").value.toLowerCase();
-      const table = document.getElementById("logTableBody");
-      table.innerHTML = "";
-      fullLogs
-        .filter(log =>
-          (!vehicleFilter || log.vehicle?.toLowerCase().includes(vehicleFilter)) &&
-          (!slotFilter || (log.slot && log.slot.toLowerCase().includes(slotFilter)))
-        )
-        .forEach(log => table.appendChild(createLogRow(log)));
-    };
-
-    const downloadCSV = () => {
-      let csv = "Slot,Vehicle,Booking Time,Pre-Booking Duration,Parking Duration\n";
+    // Export to Excel
+    window.exportToExcel = () => {
+      let csv = 'Slot,Vehicle,Booking Time,Pre-Booking Duration,Parking Duration,Fee (₹),Status\n';
+      
       fullLogs.forEach(log => {
-        const parkingDuration = log.vacateTime 
-          ? formatDuration(log.occupyTime, log.vacateTime)
-          : "-";
+        const fee = calculateFee(log.occupyTime, log.vacateTime);
+        const status = log.vacateTime ? 'Completed' : 'Active';
         
-        csv += `${log.slot || "-"},${log.vehicle},"${formatTime(log.bookingTime)}","${log.preBookingDuration || "-"}","${parkingDuration}"\n`;
+        csv += `${log.slot || '-'},${log.vehicle},"${formatTime(log.bookingTime)}","${log.preBookingDuration || '-'}","${log.parkingDuration || '-'}",${fee},"${status}"\n`;
       });
-      const blob = new Blob([csv], { type: "text/csv" });
+      
+      const blob = new Blob(['\uFEFF' + csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
-      const a = document.createElement("a");
+      const a = document.createElement('a');
       a.href = url;
-      a.download = "parking_logs.csv";
+      a.download = `parking_logs_${new Date().toISOString().split('T')[0]}.csv`;
       a.click();
+      URL.revokeObjectURL(url);
+      
+      showToast('📊 Report exported successfully!', 'success');
     };
 
-    const bookSlot = (slot) => {
-      const input = document.getElementById(`${slot}-vehicle`);
-      const vehicle = input.value.trim();
-      if (!vehicle) return alert("Please enter vehicle number");
-      set(ref(db, "slots/" + slot), {
-        status: "booked",
-        vehicle: vehicle,
-        bookingTime: Date.now(),
-        occupyTime: null
+    // Print report
+    window.printReport = () => {
+      window.print();
+    };
+
+    // Filter logs
+    window.filterLogs = () => {
+      const vehicleFilter = document.getElementById('filterVehicle').value.toLowerCase();
+      const slotFilter = document.getElementById('filterSlot').value.toLowerCase();
+      const tableBody = document.getElementById('logTableBody');
+      
+      tableBody.innerHTML = '';
+      
+      fullLogs
+        .filter(log => {
+          const matchVehicle = !vehicleFilter || log.vehicle?.toLowerCase().includes(vehicleFilter);
+          const matchSlot = !slotFilter || log.slot?.toLowerCase().includes(slotFilter);
+          return matchVehicle && matchSlot;
+        })
+        .forEach(log => {
+          const row = document.createElement('tr');
+          const fee = calculateFee(log.occupyTime, log.vacateTime);
+          const status = log.vacateTime ? 'Completed' : 'Active';
+          
+          row.innerHTML = `
+            <td><strong>${log.slot || '-'}</strong></td>
+            <td><span class="vehicle-badge">${log.vehicle}</span></td>
+            <td>${formatTime(log.bookingTime)}</td>
+            <td>${log.preBookingDuration || '-'}</td>
+            <td><span class="duration-badge">${log.parkingDuration || 'Active'}</span></td>
+            <td><span style="color: ${status === 'Active' ? 'var(--warning)' : 'var(--success)'}">${status}</span></td>
+          `;
+          tableBody.appendChild(row);
+        });
+    };
+
+    // Render parking slots
+    function renderParkingSlots(slotsData) {
+      const grid = document.getElementById('parkingGrid');
+      grid.innerHTML = '';
+      
+      slotsData.forEach((data, index) => {
+        const slotId = `slot${index + 1}`;
+        const slot = document.createElement('div');
+        slot.className = `slot-card ${data.status}`;
+        slot.id = slotId;
+        
+        const vehicle = data.vehicle || '';
+        const bookingTime = data.bookingTime ? formatTime(data.bookingTime) : '';
+        
+        slot.innerHTML = `
+          <div class="slot-header">
+            <div class="slot-title">
+              <i class="fas fa-parking"></i>
+              <h2>Slot ${index + 1}</h2>
+            </div>
+            <span class="slot-badge ${data.status}">
+              ${data.status === 'free' ? 'Available' : data.status === 'booked' ? 'Booked' : 'Occupied'}
+            </span>
+          </div>
+          <div class="slot-info">
+            <p><i class="fas fa-car"></i> ${vehicle || 'No vehicle'}</p>
+            ${data.status === 'booked' ? `<p><i class="fas fa-clock"></i> Booked: ${bookingTime}</p>` : ''}
+          </div>
+          ${data.status === 'free' ? `
+            <input type="text" id="vehicle-${slotId}" class="vehicle-input" placeholder="Enter vehicle number" autocomplete="off">
+            <button onclick="bookSlot('${slotId}')" class="btn btn-primary">
+              <i class="fas fa-bookmark"></i> Book Now
+            </button>
+          ` : data.status === 'booked' ? `
+            <button onclick="cancelBooking('${slotId}')" class="btn btn-primary" style="background: var(--warning);">
+              <i class="fas fa-times"></i> Cancel Booking
+            </button>
+          ` : ''}
+          <div class="timer" id="timer-${slotId}"></div>
+        `;
+        
+        grid.appendChild(slot);
       });
-      input.value = "";
-    };
+    }
 
-    window.bookSlot = bookSlot;
-    window.filterLogs = filterLogs;
-    window.downloadCSV = downloadCSV;
+    // Initialize Firebase listeners
+    function initializeFirebaseListeners() {
+      // Listen to all slots
+      const slotsRef = ref(db, 'slots');
+      onValue(slotsRef, (snapshot) => {
+        const slotsData = snapshot.val();
+        if (slotsData) {
+          const slotsArray = Object.values(slotsData);
+          renderParkingSlots(slotsArray);
+          updateStatistics(slotsArray);
+          
+          // Calculate today's revenue
+          let todayRevenue = 0;
+          const today = new Date().setHours(0,0,0,0);
+          fullLogs.forEach(log => {
+            if (log.vacateTime && parseInt(log.vacateTime) >= today) {
+              todayRevenue += calculateFee(log.occupyTime, log.vacateTime);
+            }
+          });
+          document.getElementById('todayRevenue').textContent = `₹${todayRevenue}`;
+        }
+      });
+
+      // Listen to logs
+      const logsRef = ref(db, 'parkingLogs');
+      onValue(logsRef, (snapshot) => {
+        const logs = snapshot.val();
+        if (logs) {
+          fullLogs = Object.values(logs)
+            .filter(log => log.slot && log.vehicle)
+            .sort((a, b) => parseInt(b.bookingTime) - parseInt(a.bookingTime));
+          
+          window.filterLogs();
+        }
+      });
+
+      // Listen to system commands
+      const commandsRef = ref(db, 'system/commands');
+      onValue(commandsRef, (snapshot) => {
+        const cmd = snapshot.val();
+        if (cmd && cmd.buzzer) {
+          // Show buzzer notification
+          let message = '';
+          switch(cmd.buzzer) {
+            case 'single': message = '🔔 Booking confirmed'; break;
+            case 'double': message = '🚗 Vehicle arrived'; break;
+            case 'triple': message = '🚙 Vehicle departed'; break;
+            case 'long': message = '⚠️ Unauthorized parking detected'; break;
+          }
+          if (message) showToast(message, 'info');
+        }
+      });
+    }
+
+    // Initialize on load
     window.onload = () => {
-      updateUI();
-      loadLogs();
+      initializeFirebaseListeners();
+      updateCurrentTime();
     };
   </script>
-  
 </body>
 </html>
