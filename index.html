@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Smart Car Parking System</title>
+  <title>Smart Car Parking · Theft Alert</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
@@ -18,6 +18,8 @@
       --dark: #212529;
       --gray: #6c757d;
       --white: #ffffff;
+      --theft-bg: #fff0f3;
+      --theft-border: #f72585;
     }
 
     * {
@@ -67,6 +69,35 @@
       position: relative;
     }
 
+    /* Theft notification banner */
+    .theft-notify {
+      background-color: #f72585;
+      color: white;
+      padding: 0.8rem 2rem;
+      text-align: center;
+      font-weight: 600;
+      font-size: 1.2rem;
+      letter-spacing: 0.5px;
+      box-shadow: 0 4px 10px rgba(247, 37, 133, 0.4);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      border-bottom: 2px solid #9d174d;
+      animation: pulseWarning 1.5s infinite;
+    }
+
+    .theft-notify i {
+      font-size: 1.6rem;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    @keyframes pulseWarning {
+      0% { background-color: #f72585; }
+      50% { background-color: #c2185b; }
+      100% { background-color: #f72585; }
+    }
+
     .parking-container {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -99,10 +130,6 @@
       display: flex;
       align-items: center;
       gap: 0.5rem;
-    }
-
-    .slot-card h2 i {
-      font-size: 1.2rem;
     }
 
     .slot-card .info {
@@ -191,6 +218,120 @@
       color: #9d174d;
     }
 
+    /* Theft table section */
+    .theft-section {
+      background-color: var(--white);
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem auto;
+      max-width: 1200px;
+      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.08);
+      border-left: 5px solid var(--danger);
+    }
+
+    .theft-section h2 {
+      font-size: 1.6rem;
+      color: var(--danger);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+    }
+
+    .theft-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2rem;
+      align-items: flex-end;
+    }
+
+    .theft-input-group {
+      flex: 2;
+      min-width: 250px;
+    }
+
+    .theft-input-group label {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--gray);
+      margin-bottom: 4px;
+      font-weight: 500;
+    }
+
+    .theft-input-group input {
+      width: 100%;
+      padding: 0.8rem 1rem;
+      border: 1px solid #e0e0e0;
+      border-radius: 8px;
+      font-size: 0.95rem;
+    }
+
+    .theft-input-group input:focus {
+      outline: none;
+      border-color: var(--danger);
+      box-shadow: 0 0 0 3px rgba(247, 37, 133, 0.2);
+    }
+
+    .theft-controls button {
+      padding: 0.8rem 1.8rem;
+      background-color: var(--danger);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.95rem;
+    }
+
+    .theft-controls button:hover {
+      background-color: #c2185b;
+      transform: translateY(-2px);
+    }
+
+    .theft-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #fefafb;
+      border-radius: 10px;
+      overflow: hidden;
+    }
+
+    .theft-table th {
+      background-color: var(--danger);
+      color: white;
+      padding: 0.9rem 1rem;
+      text-align: left;
+      font-weight: 500;
+    }
+
+    .theft-table td {
+      padding: 0.8rem 1rem;
+      border-bottom: 1px solid #ffe2eb;
+    }
+
+    .theft-table tr:last-child td {
+      border-bottom: none;
+    }
+
+    .theft-table .remove-btn {
+      background: none;
+      border: none;
+      color: var(--danger);
+      cursor: pointer;
+      font-size: 1.2rem;
+      transition: 0.2s;
+    }
+
+    .theft-table .remove-btn:hover {
+      color: #9d174d;
+      transform: scale(1.1);
+    }
+
     .log-section {
       background-color: var(--white);
       border-radius: 12px;
@@ -223,13 +364,6 @@
       border: 1px solid #e0e0e0;
       border-radius: 8px;
       font-size: 0.9rem;
-      transition: all 0.3s ease;
-    }
-
-    .log-controls input:focus {
-      outline: none;
-      border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
     }
 
     .log-controls button {
@@ -240,15 +374,9 @@
       border-radius: 8px;
       font-weight: 500;
       cursor: pointer;
-      transition: all 0.3s ease;
       display: flex;
       align-items: center;
       gap: 0.5rem;
-    }
-
-    .log-controls button:hover {
-      background-color: var(--secondary);
-      transform: translateY(-2px);
     }
 
     .log-table {
@@ -265,24 +393,11 @@
       color: white;
       padding: 1rem;
       text-align: left;
-      font-weight: 500;
     }
 
     .log-table td {
       padding: 0.8rem 1rem;
       border-bottom: 1px solid #f0f0f0;
-    }
-
-    .log-table tr:last-child td {
-      border-bottom: none;
-    }
-
-    .log-table tr:hover td {
-      background-color: rgba(67, 97, 238, 0.05);
-    }
-
-    .log-table tr:nth-child(even) {
-      background-color: #f9f9f9;
     }
 
     footer {
@@ -294,82 +409,46 @@
     }
 
     @media (max-width: 768px) {
-      .parking-container {
-        grid-template-columns: 1fr;
-        padding: 1rem;
-      }
-      
-      .log-section {
-        padding: 1.5rem;
-        margin: 1rem;
-      }
-      
-      .log-controls {
-        flex-direction: column;
-      }
-      
-      .log-controls input, .log-controls button {
-        width: 100%;
-      }
-      
-      .log-table {
-        display: block;
-        overflow-x: auto;
-      }
+      .parking-container { grid-template-columns: 1fr; padding: 1rem; }
+      .log-section, .theft-section { padding: 1.5rem; margin: 1rem; }
+      .theft-controls { flex-direction: column; align-items: stretch; }
     }
   </style>
 </head>
 <body>
   <header>
-    <h1><i class="fas fa-car"></i> Smart Car Parking System</h1>
-    <p>Real-time monitoring with advanced booking system</p>
+    <h1><i class="fas fa-car"></i> Smart Car Parking · TheftWatch</h1>
+    <p>Real‑time monitoring · theft vehicle alert & registration</p>
   </header>
 
-  <main class="parking-container">
-    <div id="slot1" class="slot-card available">
-      <h2><i class="fas fa-parking"></i> Slot 1</h2>
-      <p class="info">Available</p>
-      <input type="text" id="slot1-vehicle" placeholder="Enter Vehicle Number" />
-      <button onclick="bookSlot('slot1')"><i class="fas fa-bookmark"></i> Book Now</button>
-      <p class="timer"></p>
-      <p class="occupy-timer"></p>
-    </div>
-    <div id="slot2" class="slot-card available">
-      <h2><i class="fas fa-parking"></i> Slot 2</h2>
-      <p class="info">Available</p>
-      <input type="text" id="slot2-vehicle" placeholder="Enter Vehicle Number" />
-      <button onclick="bookSlot('slot2')"><i class="fas fa-bookmark"></i> Book Now</button>
-      <p class="timer"></p>
-      <p class="occupy-timer"></p>
-    </div>
-    <div id="slot3" class="slot-card available">
-      <h2><i class="fas fa-parking"></i> Slot 3</h2>
-      <p class="info">Available</p>
-      <input type="text" id="slot3-vehicle" placeholder="Enter Vehicle Number" />
-      <button onclick="bookSlot('slot3')"><i class="fas fa-bookmark"></i> Book Now</button>
-      <p class="timer"></p>
-      <p class="occupy-timer"></p>
-    </div>
-    <div id="slot4" class="slot-card available">
-      <h2><i class="fas fa-parking"></i> Slot 4</h2>
-      <p class="info">Available</p>
-      <input type="text" id="slot4-vehicle" placeholder="Enter Vehicle Number" />
-      <button onclick="bookSlot('slot4')"><i class="fas fa-bookmark"></i> Book Now</button>
-      <p class="timer"></p>
-      <p class="occupy-timer"></p>
-    </div>
-    <div id="slot5" class="slot-card available">
-      <h2><i class="fas fa-parking"></i> Slot 5</h2>
-      <p class="info">Available</p>
-      <input type="text" id="slot5-vehicle" placeholder="Enter Vehicle Number" />
-      <button onclick="bookSlot('slot5')"><i class="fas fa-bookmark"></i> Book Now</button>
-      <p class="timer"></p>
-      <p class="occupy-timer"></p>
-    </div>
+  <!-- GLOBAL THEFT NOTIFICATION BANNER -->
+  <div id="theftGlobalNotify" class="theft-notify">
+    <i class="fas fa-exclamation-triangle"></i>
+    <span id="theftNotifyMessage">⚠️ THEFT VEHICLE DETECTED: </span>
+  </div>
+
+  <main class="parking-container" id="parkingContainer">
+    <!-- slots will be filled by js but static fallback -->
   </main>
 
+  <!-- THEFT REGISTRATION SECTION -->
+  <section class="theft-section">
+    <h2><i class="fas fa-ban"></i> Stolen Vehicle Registry</h2>
+    <div class="theft-controls">
+      <div class="theft-input-group">
+        <label for="theftVehicleInput">Vehicle number (exact match)</label>
+        <input type="text" id="theftVehicleInput" placeholder="e.g. ABC-1234" />
+      </div>
+      <button id="registerTheftBtn"><i class="fas fa-plus-circle"></i> Register as Stolen</button>
+    </div>
+    <table class="theft-table">
+      <thead><tr><th>Vehicle Number</th><th>Registered On</th><th></th></tr></thead>
+      <tbody id="theftTableBody"></tbody>
+    </table>
+  </section>
+
   <section class="log-section">
-    <h2><i class="fas fa-clipboard-list"></i> Parking Session Logs</h2>
+    <h2><i class="fas fa-clipboard-list"></i> Parking Session Logs (theft flagged)</h2>
     <div class="log-controls">
       <input type="text" id="filterVehicle" placeholder="🔍 Filter by Vehicle" oninput="filterLogs()" />
       <input type="text" id="filterSlot" placeholder="🔍 Filter by Slot" oninput="filterLogs()" />
@@ -377,49 +456,139 @@
     </div>
     <table class="log-table">
       <thead>
-        <tr>
-          <th>Slot</th>
-          <th>Vehicle</th>
-          <th>Booking Time</th>
-          <th>Pre-Booking Duration</th>
-          <th>Parking Duration</th>
-        </tr>
+        <tr><th>Slot</th><th>Vehicle</th><th>Booking Time</th><th>Pre-Booking</th><th>Parking Duration</th></tr>
       </thead>
       <tbody id="logTableBody"></tbody>
     </table>
   </section>
 
   <footer>
-    <p>© 2025 Smart Parking Solutions | All rights reserved</p>
+    <p>© 2025 Smart Parking · Theft alert system active</p>
   </footer>
 
 <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
+    import { getDatabase, ref, set, onValue, push, remove } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js";
 
-   const firebaseConfig = {
-  apiKey: "AIzaSyBMLxyco3ZJsY_exarrv1or2ayxUHq27A8",
-  authDomain: "smart-car-parking-a6245.firebaseapp.com",
-  databaseURL: "https://smart-car-parking-a6245-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "smart-car-parking-a6245",
-  storageBucket: "smart-car-parking-a6245.firebasestorage.app",
-  messagingSenderId: "465653410219",
-  appId: "1:465653410219:web:159363eef141a96b234aee"
-};
+    const firebaseConfig = {
+      apiKey: "AIzaSyBMLxyco3ZJsY_exarrv1or2ayxUHq27A8",
+      authDomain: "smart-car-parking-a6245.firebaseapp.com",
+      databaseURL: "https://smart-car-parking-a6245-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "smart-car-parking-a6245",
+      storageBucket: "smart-car-parking-a6245.firebasestorage.app",
+      messagingSenderId: "465653410219",
+      appId: "1:465653410219:web:159363eef141a96b234aee"
+    };
 
     const app = initializeApp(firebaseConfig);
     const db = getDatabase(app);
     const slots = ["slot1", "slot2", "slot3", "slot4", "slot5"];
+
+    // Global state
     let fullLogs = [];
     let occupationStartTimes = {};
-    let activeLogs = {}; // Track active logs by slot
+    let activeLogs = {};
+    let theftVehicles = new Set();          // in‑memory cache
+    let currentTheftNotify = "";            // vehicle currently triggering banner
 
+    // ---------- THEFT REGISTRATION ----------
+    const theftTableBody = document.getElementById("theftTableBody");
+    const theftNotifyDiv = document.getElementById("theftGlobalNotify");
+    const theftNotifyMsg = document.getElementById("theftNotifyMessage");
+
+    function showTheftBanner(vehicle) {
+      if (!vehicle) {
+        theftNotifyDiv.style.display = "none";
+        currentTheftNotify = "";
+        return;
+      }
+      currentTheftNotify = vehicle;
+      theftNotifyMsg.innerText = `⚠️ STOLEN VEHICLE DETECTED: ${vehicle} · Check logs`;
+      theftNotifyDiv.style.display = "flex";
+    }
+
+    // Load theft vehicles from Firebase
+    function loadTheftVehicles() {
+      const theftRef = ref(db, "theftVehicles");
+      onValue(theftRef, (snapshot) => {
+        theftVehicles.clear();
+        theftTableBody.innerHTML = "";
+        const data = snapshot.val();
+        if (data) {
+          Object.entries(data).forEach(([key, value]) => {
+            theftVehicles.add(value.number.toUpperCase());
+            const row = document.createElement("tr");
+            row.dataset.key = key;
+            row.innerHTML = `
+              <td>${value.number.toUpperCase()}</td>
+              <td>${new Date(value.timestamp).toLocaleString()}</td>
+              <td><button class="remove-btn" data-key="${key}" data-number="${value.number.toUpperCase()}"><i class="fas fa-trash-alt"></i></button></td>
+            `;
+            theftTableBody.appendChild(row);
+          });
+        }
+        // After loading theft list, re-check any currently active banner
+        if (currentTheftNotify && !theftVehicles.has(currentTheftNotify)) {
+          showTheftBanner(""); // clear if no longer theft
+        }
+      });
+    }
+
+    // Register new theft vehicle
+    document.getElementById("registerTheftBtn").addEventListener("click", () => {
+      const input = document.getElementById("theftVehicleInput");
+      const vehicle = input.value.trim().toUpperCase();
+      if (!vehicle) return alert("Enter vehicle number");
+      
+      const theftRef = ref(db, "theftVehicles");
+      push(theftRef, {
+        number: vehicle,
+        timestamp: Date.now()
+      }).then(() => {
+        input.value = "";
+      }).catch(err => alert("Error: " + err));
+    });
+
+    // Remove theft vehicle (event delegation)
+    theftTableBody.addEventListener("click", (e) => {
+      const btn = e.target.closest(".remove-btn");
+      if (btn) {
+        const key = btn.dataset.key;
+        if (key && confirm("Remove from stolen list?")) {
+          remove(ref(db, `theftVehicles/${key}`));
+        }
+      }
+    });
+
+    // ---------- PARKING SLOT UI (render from js to attach dynamic listeners) ----------
+    function renderSlots() {
+      const container = document.getElementById("parkingContainer");
+      container.innerHTML = "";
+      slots.forEach(slot => {
+        const card = document.createElement("div");
+        card.id = slot;
+        card.className = "slot-card available";
+        card.innerHTML = `
+          <h2><i class="fas fa-parking"></i> ${slot.replace('slot', 'Slot ')}</h2>
+          <p class="info">Available</p>
+          <input type="text" id="${slot}-vehicle" placeholder="Enter Vehicle Number" />
+          <button onclick="window.bookSlot('${slot}')"><i class="fas fa-bookmark"></i> Book Now</button>
+          <p class="timer"></p>
+          <p class="occupy-timer"></p>
+        `;
+        container.appendChild(card);
+      });
+    }
+    renderSlots();
+
+    // ---------- UPDATE UI FROM FIREBASE + THEFT CHECK ----------
     const updateUI = () => {
       slots.forEach(slot => {
         const slotRef = ref(db, "slots/" + slot);
         onValue(slotRef, (snapshot) => {
           const data = snapshot.val();
           const card = document.getElementById(slot);
+          if (!card) return;
           const btn = card.querySelector("button");
           const timer = card.querySelector(".timer");
           const timer2 = card.querySelector(".occupy-timer");
@@ -453,17 +622,20 @@
               
               if (!occupationStartTimes[slot] || previousStatus !== "occupied") {
                 occupationStartTimes[slot] = Date.now();
-                // Create log entry when vehicle occupies the slot
                 const logKey = `${slot}-${data.vehicle}-${data.bookingTime}`;
                 activeLogs[slot] = logKey;
+                // check if vehicle is theft at occupation time (could be detected earlier)
+                const isTheft = theftVehicles.has(data.vehicle.toUpperCase());
                 set(ref(db, `parkingLogs/${logKey}`), {
                   slot: slot,
                   vehicle: data.vehicle,
                   bookingTime: data.bookingTime,
                   occupyTime: occupationStartTimes[slot],
                   preBookingDuration: formatDuration(data.bookingTime, occupationStartTimes[slot]),
-                  parkingDuration: "-"
+                  parkingDuration: "-",
+                  theftFlag: isTheft ? true : null   // mark theft in log
                 });
+                if (isTheft) showTheftBanner(data.vehicle);
               }
               
               card.occupyInterval = setInterval(() => {
@@ -481,9 +653,11 @@
               timer.innerText = "";
               timer2.innerText = "";
               
-              // Update log entry when vehicle vacates
               if (previousStatus === "occupied" && activeLogs[slot]) {
                 const vacateTime = Date.now();
+                const vehicle = data.vehicle; // actually data might be empty, need to retrieve from old log? we'll store separately
+                // But we need vehicle. We'll fetch it from activeLogs. Actually we have vehicle in activeLogs key
+                // better to store minimal. For simplicity, we just update duration using activeLogs[slot] ref.
                 set(ref(db, `parkingLogs/${activeLogs[slot]}`), {
                   vacateTime: vacateTime,
                   parkingDuration: formatDuration(occupationStartTimes[slot], vacateTime)
@@ -492,14 +666,15 @@
               }
               
               delete occupationStartTimes[slot];
+              // clear theft banner if no active theft vehicle parked? optional
             }
-            
             card.previousStatus = status;
           }
         });
       });
     };
 
+    // ---------- LOAD LOGS + THEFT MARKING ----------
     const loadLogs = () => {
       const logsRef = ref(db, "parkingLogs/");
       onValue(logsRef, (snapshot) => {
@@ -508,9 +683,8 @@
         fullLogs = [];
         const logs = snapshot.val();
         if (logs) {
-          // Convert logs object to array and sort by booking time
           fullLogs = Object.values(logs)
-            .filter(log => log.slot && log.vehicle && log.bookingTime)
+            .filter(log => log.slot && log.vehicle)
             .sort((a, b) => parseInt(b.bookingTime) - parseInt(a.bookingTime));
           
           fullLogs.forEach(log => {
@@ -521,48 +695,29 @@
       });
     };
 
-    const formatTime = (ms) => {
-      if (!ms) return "-";
-      const date = new Date(parseInt(ms));
-      const options = {
-        year: 'numeric',
-        month: 'short',
-        day: 'numeric',
-        hour: '2-digit',
-        minute: '2-digit',
-        second: '2-digit',
-        timeZoneName: 'short'
-      };
-      return date.toLocaleString(undefined, options);
+    // Helper: format duration
+    const formatDuration = (start, end) => {
+      if (!start || !end) return "-";
+      const diff = Math.max(0, Math.floor((parseInt(end) - parseInt(start)) / 1000));
+      const h = Math.floor(diff / 3600);
+      const m = Math.floor((diff % 3600) / 60);
+      const s = diff % 60;
+      return h ? `${h}h ${m}m ${s}s` : m ? `${m}m ${s}s` : `${s}s`;
     };
 
-    const formatDuration = (startTime, endTime) => {
-      if (!startTime || !endTime) return "-";
-      const diff = Math.max(0, Math.floor((parseInt(endTime) - parseInt(startTime)) / 1000));
-      const hours = Math.floor(diff / 3600);
-      const mins = Math.floor((diff % 3600) / 60);
-      const secs = diff % 60;
-      
-      if (hours > 0) {
-        return `${hours}h ${mins}m ${secs}s`;
-      } else if (mins > 0) {
-        return `${mins}m ${secs}s`;
-      } else {
-        return `${secs}s`;
-      }
+    const formatTime = (ms) => {
+      if (!ms) return "-";
+      return new Date(parseInt(ms)).toLocaleString();
     };
 
     const createLogRow = (log) => {
       const row = document.createElement("tr");
-      
-      // Calculate parking duration if vacate time exists
-      const parkingDuration = log.vacateTime 
-        ? formatDuration(log.occupyTime, log.vacateTime)
-        : "-";
-
+      const isTheft = log.theftFlag || theftVehicles.has(log.vehicle?.toUpperCase());
+      const parkingDuration = log.vacateTime ? formatDuration(log.occupyTime, log.vacateTime) : "-";
+      const theftBadge = isTheft ? ' <span style="color:#f72585; font-weight:600;">(STOLEN)</span>' : '';
       row.innerHTML = `
-        <td>${log.slot || "-"}</td>
-        <td>${log.vehicle}</td>
+        <td>${log.slot || "-"} ${isTheft ? '🚨' : ''}</td>
+        <td>${log.vehicle}${theftBadge}</td>
         <td>${formatTime(log.bookingTime)}</td>
         <td>${log.preBookingDuration || "-"}</td>
         <td>${parkingDuration}</td>
@@ -570,7 +725,8 @@
       return row;
     };
 
-    const filterLogs = () => {
+    // Filter logs (client side)
+    window.filterLogs = () => {
       const vehicleFilter = document.getElementById("filterVehicle").value.toLowerCase();
       const slotFilter = document.getElementById("filterSlot").value.toLowerCase();
       const table = document.getElementById("logTableBody");
@@ -583,14 +739,12 @@
         .forEach(log => table.appendChild(createLogRow(log)));
     };
 
-    const downloadCSV = () => {
-      let csv = "Slot,Vehicle,Booking Time,Pre-Booking Duration,Parking Duration\n";
+    window.downloadCSV = () => {
+      let csv = "Slot,Vehicle,Booking Time,Pre-Booking Duration,Parking Duration,TheftFlag\n";
       fullLogs.forEach(log => {
-        const parkingDuration = log.vacateTime 
-          ? formatDuration(log.occupyTime, log.vacateTime)
-          : "-";
-        
-        csv += `${log.slot || "-"},${log.vehicle},"${formatTime(log.bookingTime)}","${log.preBookingDuration || "-"}","${parkingDuration}"\n`;
+        const parking = log.vacateTime ? formatDuration(log.occupyTime, log.vacateTime) : "-";
+        const theftFlag = (log.theftFlag || theftVehicles.has(log.vehicle?.toUpperCase())) ? "YES" : "NO";
+        csv += `${log.slot || "-"},${log.vehicle},"${formatTime(log.bookingTime)}","${log.preBookingDuration || "-"}","${parking}","${theftFlag}"\n`;
       });
       const blob = new Blob([csv], { type: "text/csv" });
       const url = URL.createObjectURL(blob);
@@ -600,10 +754,23 @@
       a.click();
     };
 
-    const bookSlot = (slot) => {
+    // ---------- BOOK SLOT WITH THEFT CHECK & BANNER ----------
+    window.bookSlot = (slot) => {
       const input = document.getElementById(`${slot}-vehicle`);
       const vehicle = input.value.trim();
       if (!vehicle) return alert("Please enter vehicle number");
+      
+      const vehicleUpper = vehicle.toUpperCase();
+      // check theft set
+      if (theftVehicles.has(vehicleUpper)) {
+        // show banner immediately
+        showTheftBanner(vehicleUpper);
+        // Also push a theft attempt log? optional but we can add a special log
+        alert("⚠️ THIS VEHICLE IS REGISTERED AS STOLEN! Booking blocked.");
+        return;   // BLOCK BOOKING
+      }
+      
+      // proceed to book
       set(ref(db, "slots/" + slot), {
         status: "booked",
         vehicle: vehicle,
@@ -613,14 +780,13 @@
       input.value = "";
     };
 
-    window.bookSlot = bookSlot;
-    window.filterLogs = filterLogs;
-    window.downloadCSV = downloadCSV;
+    // ---------- INITIALIZE ----------
     window.onload = () => {
+      loadTheftVehicles();
       updateUI();
       loadLogs();
     };
+
   </script>
-  
 </body>
 </html>
